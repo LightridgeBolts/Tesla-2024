@@ -16,4 +16,31 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  
+  public static class SwerveConstants {
+
+    // CHANNEL VALUES HERE ARE PLACEHOLDERS
+    // CHANGE BEFORE BUILD TESTING
+
+    // change these long ass names bruh
+    
+    public static final int rLDrive = 0;
+    public static final int rRDrive = 1;
+    public static final int fLDrive = 2;
+    public static final int fRDrive = 3;
+
+    public static final int rLSteer = 0;
+    public static final int rRSteer = 1;
+    public static final int fLSteer = 2;
+    public static final int fRSteer = 3;
+
+    public static final int rearLeftEncoder = 0;
+    public static final int rearRightEncoder = 1;
+    public static final int frontLeftEncoder = 2;
+    public static final int frontRightEncoder = 3;
+
+
+
+  }
+
 }
