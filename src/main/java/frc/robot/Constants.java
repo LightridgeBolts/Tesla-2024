@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -38,6 +40,12 @@ public final class Constants {
     public static final int rearRightEncoder = 1;
     public static final int frontLeftEncoder = 2;
     public static final int frontRightEncoder = 3;
+
+    public static final Rotation2d[] kSteerEncoderOffsets = {Rotation2d.fromDegrees(0),  // fl
+                                                             Rotation2d.fromDegrees(0),  // fr
+                                                             Rotation2d.fromDegrees(0),  // rl
+                                                             Rotation2d.fromDegrees(0)}; // rr
+
 
 
 

@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.*;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -38,9 +39,19 @@ public class SwerveModule {
     private final Rotation2d absoluteOffset;
     private Rotation2d relativeOffset;
 
+    private final SparkMaxPIDController PIDDrive;
+    private final SparkMaxPIDController PIDSteer;
+    
+    // current state of motors
+    // speed and angle of motors
+
+    private SwerveModuleState relativeState;
+
+
+
     public SwerveModule(int drivePort, int steerPort) {
         
-        System.out.println("SwerveModule Constructor Test");
+        // constructor
         
         this.driveMotor = new CANSparkMax(drivePort, MotorType.kBrushless);
         this.steerMotor = new CANSparkMax(steerPort, MotorType.kBrushless);
@@ -53,8 +64,8 @@ public class SwerveModule {
         // coast will stop power output to the motors 
         // brake is bootycheeks, jus coast, cus elevator go down if brake
 
-        driveMotor.setIdleMode(IdleMode.kCoast);
-        steerMotor.setIdleMode(IdleMode.kCoast);
+        this.driveMotor.setIdleMode(IdleMode.kCoast);
+        this.steerMotor.setIdleMode(IdleMode.kCoast);
         
         // encoders
         // the CAN motor obj give us the getEncoder objs for us
@@ -71,6 +82,23 @@ public class SwerveModule {
         // check the doc cus im not aboutta yap about PID controllers
         // on fackin vscode 
         
+        this.PIDDrive = driveMotor.getPIDController();
+        this.PIDSteer = steerMotor.getPIDController();
+        
+
+        this.relativeState = new SwerveModuleState();
+
+        // sets angle and speed of steer and drive motors to 0 degrees and 0 meters per second respectively 
+        // no arguements passed cus the mf does it by default
+        // right click and click 'go to definition' for more details
+
+        absoluteOffset = Constants.SwerveConstants.kSteerEncoderOffsets[0];
+
+
+    }
+
+    @Override
+    public void periodic() {
 
 
     }
