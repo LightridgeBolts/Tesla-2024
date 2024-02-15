@@ -26,8 +26,10 @@ public class Robot extends TimedRobot {
   //                                                                         //
   /////////////////////////////////////////////////////////////////////////////
 
-  private final PS4Controller oystick driver = new Joystick(0);
+  private final PS4Controller driverController = new PS4Controller(0;
   
+  )
+
   private SwerveDrive swerve;
   // private ArmInterface arm;
 

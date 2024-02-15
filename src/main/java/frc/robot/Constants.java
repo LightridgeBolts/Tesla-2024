@@ -159,24 +159,24 @@ public final class Constants {
     public static final int kOperatorControllerPort = 1;
 
     // Xbox Joystick Axis
-    public static final int kXboxLeftXAxis = 0;
-    public static final int kXboxLeftYAxis = 1;
-    public static final int kXboxLeftTrigger = 2;
-    public static final int kXboxRightTripper = 3;
-    public static final int kXboxRightXAxis = 4;
-    public static final int kXboxRightYAxis = 5;
+    public static final int kLeftXAxis = 0;
+    public static final int kLeftYAxis = 1;
+    public static final int kLeftTrigger = 3;
+    public static final int kRightTrigger = 4;
+    public static final int kRightXAxis = 2;
+    public static final int kRightYAxis = 5;
 
     // Xbox Button Bindings
-    public static final int kXboxA = 1;
-    public static final int kXboxB = 2;
-    public static final int kXboxX = 3;
-    public static final int kXboxY = 4;
-    public static final int kXboxLB = 5;
-    public static final int kXboxRB = 6;
-    public static final int kXboxView = 7;
-    public static final int kXboxMenuT = 8;
-    public static final int kXboxLeftStickButton = 9;
-    public static final int kXboxRightStickButton = 10;
+    public static final int kButtonA = 1;
+    public static final int kButtonB = 2;
+    public static final int kButtonX = 3;
+    public static final int kButtonY = 4;
+    public static final int kButtonLB = 5;
+    public static final int kButtonRB = 6;
+    public static final int kButtonView = 7;
+    public static final int kButtonMenuT = 8;
+    public static final int kButtonLeftStickButton = 9;
+    public static final int kButtonRightStickButton = 10;
 
     // RadioMaster Zorro Joystick Axis
     public static final int kZorroLeftXAxis = 0;
