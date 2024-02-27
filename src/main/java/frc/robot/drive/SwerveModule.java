@@ -50,8 +50,8 @@ public class SwerveModule extends SubsystemBase {
         driveMotor = new CANSparkMax(driveMotorChannel, MotorType.kBrushless);
         steerMotor = new CANSparkMax(steerMotorChannel, MotorType.kBrushless);
 
-        driveMotor.restoreFactoryDefaults();
-        steerMotor.restoreFactoryDefaults();
+        //driveMotor.restoreFactoryDefaults();
+        //steerMotor.restoreFactoryDefaults();
 
         driveEncoder = driveMotor.getEncoder();
         steerEncoder = steerMotor.getEncoder();

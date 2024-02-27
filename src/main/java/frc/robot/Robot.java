@@ -26,9 +26,9 @@ public class Robot extends TimedRobot {
   //                                                                         //
   /////////////////////////////////////////////////////////////////////////////
 
-  private final PS4Controller driverController = new PS4Controller(0;
+  private final PS4Controller driverController = new PS4Controller(0);
   
-  )
+
 
   private SwerveDrive swerve;
   // private ArmInterface arm;
@@ -48,9 +48,9 @@ public class Robot extends TimedRobot {
     swerve.setDefaultCommand(new RunCommand(
       // TODO: change these to actually match real axis ports
       () -> swerve.joystickDrive(
-        driver.getRawAxis(0), 
-        driver.getRawAxis(1), 
-        driver.getRawAxis(2), 
+        driverController.getLeftX(), 
+        driverController.getLeftY(), 
+        driverController.getRightY(), 
         DriveConstants.kFieldRelative
     ), swerve));
   }
@@ -102,10 +102,11 @@ public class Robot extends TimedRobot {
   /////////////////////////////////////////////////////////////////////////////
 
   private void configureButtonBindings() {
-    Trigger leftBumper = new JoystickButton(driver, OIConstants.kXboxLB);
-    Trigger rightBumper = new JoystickButton(driver, OIConstants.kXboxRB);
+    Trigger leftBumper = new JoystickButton(driverController, OIConstants.kButtonLB);
+    Trigger rightBumper = new JoystickButton(driverController, OIConstants.kButtonRB);
 
     // leftBumper.onTrue(arm.score()).onFalse(arm.stow());
     // rightBumper.onTrue(arm.intake()).onFalse(arm.stow());
   }
 }
+

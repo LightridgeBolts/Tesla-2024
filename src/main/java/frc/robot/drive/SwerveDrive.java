@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.ElectricalConstants;
-import frc.robot.Constants.ModuleConstants;
 
 import static frc.robot.Constants.DriveConstants.*;
 import static frc.robot.Constants.ModuleConstants.*;
@@ -84,7 +83,7 @@ public class SwerveDrive extends SubsystemBase {
         getHeading(),
         getModulePositions());
     
-    SmartDashboard.putNumber("Heading", getHeading().getDegrees());
+    //SmartDashboard.putNumber("Heading", getHeading().getDegrees());
     
     // SmartDashboard.putNumber("FrontLeft State Velocity", modules[0].getState().speedMetersPerSecond);
     // SmartDashboard.putNumber("FrontLeft State Angle", modules[0].getState().angle.getDegrees());
@@ -98,9 +97,21 @@ public class SwerveDrive extends SubsystemBase {
     // SmartDashboard.putNumber("RearRight Velocity", modules[3].getState().speedMetersPerSecond);
     // SmartDashboard.putNumber("RearRight Angle", modules[3].getState().angle.getDegrees());
     
-    SmartDashboard.putNumber("currentX", getPose().getX());
-    SmartDashboard.putNumber("currentY", getPose().getY());
-    SmartDashboard.putNumber("currentAngle", getPose().getRotation().getRadians());
+    // SmartDashboard.putNumber("FrontLeft State Velocity",5);
+    // SmartDashboard.putNumber("FrontLeft State Angle", 30);
+
+    // SmartDashboard.putNumber("FrontRight Velocity", 7);
+    // SmartDashboard.putNumber("FrontRight Angle", 45);
+
+    // SmartDashboard.putNumber("RearLeft Velocity", 3);
+    // SmartDashboard.putNumber("RearLeft Angle", 135);
+
+    // SmartDashboard.putNumber("RearRight Velocity", 10);
+    // SmartDashboard.putNumber("RearRight Angle", 60);
+
+    // SmartDashboard.putNumber("currentX", getPose().getX());
+    // SmartDashboard.putNumber("currentY", getPose().getY());
+    // SmartDashboard.putNumber("currentAngle", getPose().getRotation().getRadians());
     // SmartDashboard.putNumber("targetPoseAngle", m_targetPose.getRotation().getRadians());
 
     // SmartDashboard.putNumber("FronLeft Turning CANcoder Mag Offset", modules[0].getTurnCANcoder().configGetMagnetOffset());

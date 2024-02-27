@@ -13,9 +13,9 @@ public final class Constants {
       public static final int pdpPort = 0;
 
       // -----------------------------------------   {fl  fr  rl  rr}
-      public static final int[] kSteerEncoderPorts = { 0,  1,  2,  3};
-      public static final int[] kDriveMotorPorts   = {10, 12, 22, 24};
-      public static final int[] kSteerMotorPorts   = {11, 13, 23, 25};
+      public static final int[] kSteerEncoderPorts = { 3,  2,  4,  5};
+      public static final int[] kDriveMotorPorts   = {8, 1, 7, 9};
+      public static final int[] kSteerMotorPorts   = {3, 2, 4, 5};
 
       // CAN IDs for intake and arm 
       public static final int kIntakeLeaderPort = 15;
