@@ -108,6 +108,7 @@ public class MAXSwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
     m_drivingEncoder.setPosition(0);
+
   }
 
   /**
@@ -155,6 +156,10 @@ public class MAXSwerveModule {
     m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
 
     m_desiredState = desiredState;
+  }
+
+  public void getModuleSpeed() {
+    
   }
 
   /** Zeroes all the SwerveModule encoders. */
