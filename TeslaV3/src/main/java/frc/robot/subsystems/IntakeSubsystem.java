@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import java.util.concurrent.DelayQueue;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -120,6 +123,46 @@ public class IntakeSubsystem extends SubsystemBase {
 
     return newCommand;
   }
+
+  public Command feedLauncherTwo(LauncherSubsystem _launcher) {
+    Command newCommand =
+        new Command() {
+          private Timer m_timer;
+          private boolean launcher_running = false;
+
+          @Override
+          public void initialize() {
+            m_timer = new Timer();
+            m_timer.start();
+          }
+
+          @Override
+          public void execute() {
+            _launcher.runLauncher();
+            
+          //  setPower(1.0);
+          }
+
+          @Override
+          public boolean isFinished() {
+            if (m_timer.get() > .3 && launcher_running == false){
+              launcher_running = true;
+              setPower(1.0);
+            }
+            return m_timer.get() > Constants.Intake.kShotFeedTime + .3;
+          }
+
+          @Override
+          public void end(boolean interrupted) {
+            setPower(0.0);
+          }
+        };
+
+    newCommand.addRequirements(this, _launcher);
+
+    return newCommand;
+  }
+
 
   @Override
   public void periodic() { // This method will be called once per scheduler run

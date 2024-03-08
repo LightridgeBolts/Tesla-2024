@@ -75,7 +75,7 @@ public final class Constants {
     public static final PIDGains kPositionGains = new PIDGains(1.0, 0.0, 0.0);
     public static final double kPositionTolerance = 0.5;
 
-    public static final double kIntakePower = 0.7;
+    public static final double kIntakePower = 0.5;
 
     public static final double kRetractDistance = -3.5;
 
@@ -88,8 +88,8 @@ public final class Constants {
 
     public static final int kCurrentLimit = 80;
 
-    public static final double kTopPower = 0.7;
-    public static final double kBottomPower = 0.8;
+    public static final double kTopPower = -0.7;
+    public static final double kBottomPower = -0.8;
   }
 
   public static final class Arm {
@@ -116,9 +116,9 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
         new TrapezoidProfile.Constraints(1.0, .75);
 
-    public static final double kHomePosition = 0.0;
+    public static final double kHomePosition = 0; // 1.143 > //test values
     public static final double kScoringPosition = 0.0;
-    public static final double kIntakePosition = -1.0;
+    public static final double kIntakePosition = -1.143; //0.1 ish?
   }
 
   public static final class ModuleConstants {

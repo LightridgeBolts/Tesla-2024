@@ -88,6 +88,9 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
+
+    
+
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, Button.kR1.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
     
@@ -95,30 +98,31 @@ public class RobotContainer {
     new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
     new Trigger(() ->m_driverController.getL2Axis()> Constants.OIConstants.kTriggerButtonThreshold).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
-    //new JoystickButton(m_driverController, PS4Controller.Button.)
-    //    .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kHomePosition)));
+    
+    
+    
+    
 
     // intake controls (run while button is held down, run retract command once when the button is
     // released)
     new Trigger(
             () ->
-                m_driverController.getR2Axis() * 0.3
+                m_driverController.getR2Axis()
                     > Constants.OIConstants.kTriggerButtonThreshold)
         .whileTrue(new RunCommand(() -> m_intake.setPower(Constants.Intake.kIntakePower), m_intake))
         .onFalse(m_intake.retract());
 
-    //new Trigger((null) -> m_driverController.getL2Axis() * 0.3 > Constants.OIConstants.kTriggerButtonThreshold.whileTrue(new RunCommand(() -> ))
 
     new JoystickButton(m_driverController, PS4Controller.Button.kTriangle.value)
         .whileTrue(new RunCommand(() -> m_intake.setPower(-1.0)));
-
+    
+    
     // launcher controls (button to pre-spin the launcher and button to launch)
     new JoystickButton(m_driverController, PS4Controller.Button.kR1.value)
         .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
 
     new JoystickButton(m_driverController,  PS4Controller.Button.kCross.value)
-        .onTrue(m_intake.feedLauncher(m_launcher));
-
+        .onTrue(m_intake.feedLauncherTwo(m_launcher));
     }
 
   /**
@@ -126,7 +130,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  
+  /* 
   public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config =
@@ -171,4 +175,5 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
+  */
 }
