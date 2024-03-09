@@ -110,7 +110,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public boolean isFinished() {
-            return m_timer.get() > Constants.Intake.kShotFeedTime;
+            return m_timer.get() > Constants.Intake.kShootFeedTime;
           }
 
           @Override
@@ -145,11 +145,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public boolean isFinished() {
-            if (m_timer.get() > .3 && launcher_running == false){
+            if (m_timer.get() > .1 && launcher_running == false){
               launcher_running = true;
               setPower(1.0);
             }
-            return m_timer.get() > Constants.Intake.kShotFeedTime + .3;
+            return m_timer.get() > Constants.Intake.kShootFeedTime + .1;
           }
 
           @Override

@@ -79,7 +79,7 @@ public final class Constants {
 
     public static final double kRetractDistance = -3.5;
 
-    public static final double kShotFeedTime = 1.0;
+    public static final double kShootFeedTime = 0.7;
   }
 
   public static final class Launcher {
@@ -118,7 +118,15 @@ public final class Constants {
 
     public static final double kHomePosition = 0; // 1.143 > //test values
     public static final double kScoringPosition = 0.0;
-    public static final double kIntakePosition = -1.143; //0.1 ish?
+    public static final double kIntakePosition = -1.138; //0.1 ish?
+
+    /*
+     * public static final double kHomePosition = 0; // 1.143 > //test values
+      public static final double kScoringPosition = 0.0;
+      public static final double kIntakePosition = -1.143;
+     * 
+     */
+
   }
 
   public static final class ModuleConstants {
@@ -174,7 +182,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.05;
+    public static final double kDriveDeadband = 0.1;
     public static final double kTriggerButtonThreshold = 0.5;
   }
 
@@ -197,15 +205,7 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
   }
 
-  public static final class SubstructureConstants {
 
-    public static final int outTopChannel = 12;
-    public static final int outBottomChannel = 11;
-    public static final int intakeChannel = 0;
-    public static final int pivotChannel = 0;
-
-
-  }
 
 }
 
