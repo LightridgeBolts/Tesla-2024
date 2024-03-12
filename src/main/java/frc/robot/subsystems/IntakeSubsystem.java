@@ -11,7 +11,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkRelativeEncoder;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.PIDGains;
 import frc.robot.Constants;
@@ -179,6 +181,8 @@ public class IntakeSubsystem extends SubsystemBase {
     } else {
       m_motor.set(m_power);
     }
+
+    SmartDashboard.putNumber("Intake Current", m_motor.getOutputCurrent());
   }
 
   /**
@@ -189,5 +193,55 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean isNearTarget() {
     return Math.abs(m_encoder.getPosition() - m_targetPosition)
         < Constants.Intake.kPositionTolerance;
+  }
+
+  public double getOutputCurrent() {
+    return m_motor.getOutputCurrent();
+  }
+
+  public static Command runIntake(IntakeSubsystem _intake) {
+    Command newCommand =
+        new Command() {
+          private Timer m_timer;
+          private boolean currentLimitMet = false;
+          
+
+          @Override
+          public void initialize() {
+            m_timer.start();
+          }
+
+          @Override
+          public void execute() {
+            _intake.setPower(Constants.Intake.kIntakePower);            
+          //  setPower(1.0);
+          }
+
+          @Override
+          public boolean isFinished() {
+            if(_intake.getOutputCurrent() > Constants.Intake.kCurrentThresholdIntake && currentLimitMet == false){
+              currentLimitMet = true;
+              m_timer = new Timer();
+            }
+            if(!currentLimitMet){
+              return false;
+            }
+            if(m_timer.get() < Constants.Intake.kIntakeAutonRunTime){
+              return false;
+            }
+            _intake.setPower(0.0);
+            _intake.retract();
+            return true;
+          }
+
+          @Override
+          public void end(boolean interrupted) {
+           // setPower(0.0);
+          }
+        };
+
+    newCommand.addRequirements(_intake);
+
+    return newCommand;
   }
 }

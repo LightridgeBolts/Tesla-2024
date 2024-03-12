@@ -64,6 +64,9 @@ public final class Constants {
     public static final int kFrontRightTurningCanId = 2;
     public static final int kRearRightTurningCanId = 5;
 
+    //GYRO
+    public static final int gyroCanId = 15;
+
     public static final boolean kGyroReversed = false;
   }
 
@@ -80,6 +83,11 @@ public final class Constants {
     public static final double kRetractDistance = -3.5;
 
     public static final double kShootFeedTime = 0.65;
+
+    // autonomous current threshold
+
+    public static final double kCurrentThresholdIntake = 5;
+    public static final double kIntakeAutonRunTime = .5;
   }
 
   public static final class Launcher {
@@ -100,7 +108,8 @@ public final class Constants {
     public static final double kSoftLimitReverse = -1.15;
     public static final double kSoftLimitForward = 0.0;
 
-    public static final double kArmGearRatio = (1.0 / 25.0) * (28.0 / 50.0) * (16.0 / 64.0);
+    //TODO: This is the correct gear ratio
+    public static final double kArmGearRatio = (1.0 / 20.0) * (28.0 / 50.0) * (16.0 / 64.0);
     public static final double kPositionFactor =
         kArmGearRatio
             * 2.0
@@ -114,11 +123,12 @@ public final class Constants {
         new ArmFeedforward(0.0, 3.0, 12.0 / kArmFreeSpeed, 0.0);
     public static final PIDGains kArmPositionGains = new PIDGains(2.5, 0.0, 0.0);
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(.03, .1);
+        new TrapezoidProfile.Constraints(.3, .1);
 
     public static double kHomePosition = 0.0; // 1.143 > //test values
     public static final double kScoringPosition = 0.0;
     public static double kIntakePosition = -.988; //0.1 ish?
+    public static final double kUnderChainPosition = -.7;
 
 
 
@@ -207,8 +217,6 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
-
-
 
 }
 

@@ -70,8 +70,8 @@ public class LauncherSubsystem extends SubsystemBase {
       m_topMotor.set(Constants.Launcher.kTopPower);
       m_bottomMotor.set(Constants.Launcher.kBottomPower);
     } else if (ampMode) {
-      m_topMotor.set(-0.3);
-      m_bottomMotor.set(-0.3);
+      m_topMotor.set(-0.1);
+      m_bottomMotor.set(-0.1);
     } else {
       m_topMotor.set(0);
       m_bottomMotor.set(0);

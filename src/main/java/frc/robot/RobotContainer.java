@@ -115,9 +115,10 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
     new Trigger(() ->m_driverController.getL2Axis()> Constants.OIConstants.kTriggerButtonThreshold).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
     
-    
-    new JoystickButton(m_driverController,  PS4Controller.Button.kCircle.value)
-        .onTrue(new InstantCommand(() -> directionNegate = !directionNegate));
+    new POVButton(m_driverController, 0).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kUnderChainPosition)));
+
+  //  new JoystickButton(m_driverController,  PS4Controller.Button.kCircle.value)
+   //     .onTrue(new InstantCommand(() -> directionNegate = !directionNegate));
     
 
     // intake controls (run while button is held down, run retract command once when the button is
@@ -139,15 +140,15 @@ public class RobotContainer {
     new JoystickButton(m_driverController, PS4Controller.Button.kR1.value)
         .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
 
+    // This runs a shot
     new JoystickButton(m_driverController,  PS4Controller.Button.kCross.value)
         .onTrue(m_intake.feedLauncherTwo(m_launcher));
 
+
+    // Buttons for manually adjusting the height of the robot
     new POVButton(m_driverController, 180).onTrue(moveBack(.3));
-    new POVButton(m_driverController, 270).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition + .004));
-    new POVButton(m_driverController, 90).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition - .004));
-    new POVButton(m_driverController, 0).onTrue(new RunCommand(() -> Constants.Arm.kHomePosition = Constants.Arm.kHomePosition - .004));
-
-
+    new POVButton(m_driverController, 270).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition + .002));
+    new POVButton(m_driverController, 90).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition - .002));
     
     // new POVButton(m_driverController, 180).toggleOnTrue(getMoveBackCommand());    
 }
