@@ -51,15 +51,30 @@ public class LauncherSubsystem extends SubsystemBase {
     m_launcherRunning = false;
   }
 
+  public boolean ampMode = false;
+
+  public void ampMode() {
+    ampMode = true;
+  //  m_topMotor.set(-0.5);
+   // m_bottomMotor.set(-0.6);
+  }
+
+  public void disableAmpMode() {
+    ampMode = false;
+  }
+
   @Override
   public void periodic() { // this method will be called once per scheduler run
     // set the launcher motor powers based on whether the launcher is on or not
     if (m_launcherRunning) {
       m_topMotor.set(Constants.Launcher.kTopPower);
       m_bottomMotor.set(Constants.Launcher.kBottomPower);
+    } else if (ampMode) {
+      m_topMotor.set(-0.3);
+      m_bottomMotor.set(-0.3);
     } else {
-      m_topMotor.set(0.0);
-      m_bottomMotor.set(0.0);
+      m_topMotor.set(0);
+      m_bottomMotor.set(0);
     }
   }
 }

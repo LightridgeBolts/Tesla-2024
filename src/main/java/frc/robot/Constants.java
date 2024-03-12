@@ -79,7 +79,7 @@ public final class Constants {
 
     public static final double kRetractDistance = -3.5;
 
-    public static final double kShootFeedTime = 0.7;
+    public static final double kShootFeedTime = 0.65;
   }
 
   public static final class Launcher {
@@ -114,11 +114,14 @@ public final class Constants {
         new ArmFeedforward(0.0, 3.0, 12.0 / kArmFreeSpeed, 0.0);
     public static final PIDGains kArmPositionGains = new PIDGains(2.5, 0.0, 0.0);
     public static final TrapezoidProfile.Constraints kArmMotionConstraint =
-        new TrapezoidProfile.Constraints(1.0, .75);
+        new TrapezoidProfile.Constraints(.03, .1);
 
-    public static final double kHomePosition = 0; // 1.143 > //test values
+    public static double kHomePosition = 0.0; // 1.143 > //test values
     public static final double kScoringPosition = 0.0;
-    public static final double kIntakePosition = -1.138; //0.1 ish?
+    public static double kIntakePosition = -.988; //0.1 ish?
+
+
+
 
     /*
      * public static final double kHomePosition = 0; // 1.143 > //test values
@@ -182,7 +185,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.1;
+    public static final double kDriveDeadband = 0.02;
     public static final double kTriggerButtonThreshold = 0.5;
   }
 

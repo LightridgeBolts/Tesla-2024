@@ -145,11 +145,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public boolean isFinished() {
-            if (m_timer.get() > .1 && launcher_running == false){
+            if (m_timer.get() > .14 && launcher_running == false){
               launcher_running = true;
               setPower(1.0);
-            }
-            return m_timer.get() > Constants.Intake.kShootFeedTime + .1;
+            } 
+            return m_timer.get() > Constants.Intake.kShootFeedTime;
+  
           }
 
           @Override

@@ -19,6 +19,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -71,11 +72,17 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftY()) : (m_driverController.getLeftY()), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftX()) : (m_driverController.getLeftX()), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getRightX()) : (m_driverController.getRightX()), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftY() * .7) : (m_driverController.getLeftY() * .7), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftX() * .7) : (m_driverController.getLeftX() * .7), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getRightX() * .7) : (m_driverController.getRightX() * .7), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
+
+            /*
+             * -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftY()) : (m_driverController.getLeftY()), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftX()) : (m_driverController.getLeftX()), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getRightX()) : (m_driverController.getRightX()), OIConstants.kDriveDeadband)
+             */
 
             m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
@@ -124,7 +131,8 @@ public class RobotContainer {
 
 
     new JoystickButton(m_driverController, PS4Controller.Button.kTriangle.value)
-        .whileTrue(new RunCommand(() -> m_intake.setPower(-1.0)));
+        .whileTrue(new RunCommand(() -> m_launcher.ampMode()))
+        .onFalse(new RunCommand(() ->m_launcher.disableAmpMode()));
     
     
     // launcher controls (button to pre-spin the launcher and button to launch)
@@ -134,8 +142,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController,  PS4Controller.Button.kCross.value)
         .onTrue(m_intake.feedLauncherTwo(m_launcher));
 
-    new POVButton(m_driverController
-    5, 180).onTrue(getMoveBackCommand(0, -1));
+    new POVButton(m_driverController, 180).onTrue(moveBack(.3));
+    new POVButton(m_driverController, 270).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition + .004));
+    new POVButton(m_driverController, 90).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition - .004));
+    new POVButton(m_driverController, 0).onTrue(new RunCommand(() -> Constants.Arm.kHomePosition = Constants.Arm.kHomePosition - .004));
+
+
+    
     // new POVButton(m_driverController, 180).toggleOnTrue(getMoveBackCommand());    
 }
 
@@ -186,13 +199,53 @@ public class RobotContainer {
     // Reset odometry to the starting pose of the trajectory.
     m_robotDrive.resetOdometry(moveBack.getInitialPose());
 
-
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
 
   public Command getAutonShootMoveBack() {
-    return new SequentialCommandGroup(getMoveBackCommand(0, -1), m_intake.feedLauncher(m_launcher), getMoveBackCommand(-1, -3));
+    return new SequentialCommandGroup(moveBack(1.5));
+  }
+
+  /*
+  public Command getAutonShootMoveBack() {
+    Command runLaunch = new RunCommand(() -> m_launcher.runLauncher());
+    return new SequentialCommandGroup(moveBack(.1), runLaunch, moveBack(.2));
+  }
+  */
+
+  public Command moveBack(double time) {
+    Command newCommand =
+        new Command() {
+          private Timer m_timer;
+
+          @Override
+          public void initialize() {
+            m_timer = new Timer();
+            m_timer.start();
+          }
+
+          @Override
+          public void execute() {
+            m_robotDrive.drive(-.5, 0, 0, true, true);            
+          //  setPower(1.0);
+          }
+
+          @Override
+          public boolean isFinished() {
+            if (m_timer.get() < time){
+              m_robotDrive.drive(-.5, 0, 0, true, true);
+            } 
+            return m_timer.get() > time;
+          }
+
+          @Override
+          public void end(boolean interrupted) {
+            m_robotDrive.drive(0, 0, 0, true, false);
+          }
+        };
+    newCommand.addRequirements(m_robotDrive);
+    return newCommand;
   }
 
 
