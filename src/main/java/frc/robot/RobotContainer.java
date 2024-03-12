@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.List;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -91,8 +93,7 @@ public class RobotContainer {
         
             // configure the launcher to stop when no other command is running
             m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
-          
-
+    initPathPlanner();
   }
 
   /**
@@ -104,6 +105,13 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
+
+   private void initPathPlanner() {
+    NamedCommands.registerCommand("intakeRun", IntakeSubsystem.runIntake(m_intake));
+    NamedCommands.registerCommand("armScoringPosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
+    NamedCommands.registerCommand("armIntakePosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
+    NamedCommands.registerCommand("intakeShoot", new InstantCommand(() -> m_intake.feedLauncher(m_launcher)));
+   }
 
     
 
@@ -248,7 +256,4 @@ public class RobotContainer {
     newCommand.addRequirements(m_robotDrive);
     return newCommand;
   }
-
-
-
 }
