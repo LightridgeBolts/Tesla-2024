@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.List;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
@@ -21,6 +22,8 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -55,6 +58,8 @@ public class RobotContainer {
   private final SlewRateLimiter slew_right_x = new SlewRateLimiter(.5);
 
   private boolean directionNegate = false;
+
+  SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
 
   // The driver's controller
@@ -94,6 +99,7 @@ public class RobotContainer {
             // configure the launcher to stop when no other command is running
             m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
     initPathPlanner();
+    initAutons();
   }
 
   /**
@@ -113,7 +119,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeShoot", new InstantCommand(() -> m_intake.feedLauncher(m_launcher)));
    }
 
-    
+   private void initAutons() {
+    m_autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", m_autoChooser);
+   }
+
+   public Command getSelectedAuton() {
+    return m_autoChooser.getSelected();
+   }
 
   private void configureButtonBindings() {
     new JoystickButton(m_driverController, PS4Controller.Button.kSquare.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
