@@ -82,12 +82,12 @@ public final class Constants {
 
     public static final double kRetractDistance = -3.5;
 
-    public static final double kShootFeedTime = 0.65;
+    public static final double kShootFeedTime = 1.2;
 
     // autonomous current threshold
 
-    public static final double kCurrentThresholdIntake = 5;
-    public static final double kIntakeAutonRunTime = .5;
+    public static final double kCurrentThresholdIntake = 25;
+    public static final double kIntakeAutonRunTime = 1;
   }
 
   public static final class Launcher {
@@ -109,7 +109,7 @@ public final class Constants {
     public static final double kSoftLimitForward = 0.0;
 
     //TODO: This is the correct gear ratio
-    public static final double kArmGearRatio = (1.0 / 20.0) * (28.0 / 50.0) * (16.0 / 64.0);
+    public static final double kArmGearRatio = (1.0 / 25.0) * (28.0 / 50.0) * (16.0 / 64.0);
     public static final double kPositionFactor =
         kArmGearRatio
             * 2.0
@@ -127,7 +127,8 @@ public final class Constants {
 
     public static double kHomePosition = 0.0; // 1.143 > //test values
     public static final double kScoringPosition = 0.0;
-    public static double kIntakePosition = -.988; //0.1 ish?
+    public static double kIntakePosition = -.989; //0.1 ish?
+    public static double kIntakePositionAuton = -9.90;
     public static final double kUnderChainPosition = -.7;
 
 

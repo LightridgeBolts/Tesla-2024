@@ -117,6 +117,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public void end(boolean interrupted) {
+            _launcher.stopLauncher();
             setPower(0.0);
           }
         };
@@ -208,7 +209,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public void initialize() {
-            m_timer.start();
+          //  m_timer = new Timer();
+           // m_timer.start();
           }
 
           @Override

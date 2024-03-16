@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2,
-      "y": 5.525138184875874
+      "x": 0.7815863793056181,
+      "y": 4.6061651316659695
     },
-    "rotation": 180.0
+    "rotation": 122.79953127261922
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SPSL_PathLeave1Foot"
+            "pathName": "1NPLS_MoveBackTo1Foot"
           }
         },
         {
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.2
+            "waitTime": 1.0
           }
         },
         {
@@ -36,15 +36,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "SPSL_PathPickUpMiddleNote"
+            "pathName": "1NPLS_PICKUP_CENTER"
           }
         },
         {
@@ -56,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SPSL_MoveBackTo1Foot"
+            "pathName": "1NPLS_MOVEBACK"
           }
         },
         {

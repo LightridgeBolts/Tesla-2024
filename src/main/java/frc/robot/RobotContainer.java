@@ -53,11 +53,11 @@ public class RobotContainer {
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final LauncherSubsystem m_launcher = new LauncherSubsystem();
-  private final SlewRateLimiter slew_left_y = new SlewRateLimiter(0.5);
-  private final SlewRateLimiter slew_left_x = new SlewRateLimiter(.5);
-  private final SlewRateLimiter slew_right_x = new SlewRateLimiter(.5);
+//  private final SlewRateLimiter slew_left_y = new SlewRateLimiter(0.5);
+ // private final SlewRateLimiter slew_left_x = new SlewRateLimiter(.5);
+  //private final SlewRateLimiter slew_right_x = new SlewRateLimiter(.5);
 
-  private boolean directionNegate = false;
+  private boolean directionNegate = true;
 
   SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
@@ -69,6 +69,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    initPathPlanner();
     // Configure the button bindings
     configureButtonBindings();
     
@@ -98,7 +99,7 @@ public class RobotContainer {
         
             // configure the launcher to stop when no other command is running
             m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
-    initPathPlanner();
+   
     initAutons();
   }
 
@@ -115,8 +116,8 @@ public class RobotContainer {
    private void initPathPlanner() {
     NamedCommands.registerCommand("intakeRun", IntakeSubsystem.runIntake(m_intake));
     NamedCommands.registerCommand("armScoringPosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
-    NamedCommands.registerCommand("armIntakePosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
-    NamedCommands.registerCommand("intakeShoot", new InstantCommand(() -> m_intake.feedLauncher(m_launcher)));
+    NamedCommands.registerCommand("armIntakePosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePositionAuton)));
+    NamedCommands.registerCommand("intakeShoot", m_intake.feedLauncher(m_launcher));
    }
 
    private void initAutons() {
