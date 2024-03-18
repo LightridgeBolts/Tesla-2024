@@ -82,7 +82,7 @@ public class RobotContainer {
             () -> m_robotDrive.drive(
                 -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftY() * .7) : (m_driverController.getLeftY() * .7), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getLeftX() * .7) : (m_driverController.getLeftX() * .7), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getRightX() * .7) : (m_driverController.getRightX() * .7), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband((directionNegate) ? (m_driverController.getRightX() * .7) : (m_driverController.getRightX() * .7), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
 
@@ -117,7 +117,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeRun", IntakeSubsystem.runIntake(m_intake));
     NamedCommands.registerCommand("armScoringPosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
     NamedCommands.registerCommand("armIntakePosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePositionAuton)));
-    NamedCommands.registerCommand("intakeShoot", m_intake.feedLauncher(m_launcher));
+    NamedCommands.registerCommand("intakeShoot", m_intake.feedLauncherTwo(m_launcher));
+    NamedCommands.registerCommand("retractIntake", m_intake.retract());
    }
 
    private void initAutons() {

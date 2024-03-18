@@ -82,12 +82,12 @@ public final class Constants {
 
     public static final double kRetractDistance = -3.5;
 
-    public static final double kShootFeedTime = 1.2;
+    public static final double kShootFeedTime = .5;
 
     // autonomous current threshold
 
-    public static final double kCurrentThresholdIntake = 25;
-    public static final double kIntakeAutonRunTime = 1;
+    public static final double kCurrentThresholdIntake = 30;
+    public static final double kIntakeAutonRunTime = 0.55;
   }
 
   public static final class Launcher {
@@ -128,7 +128,7 @@ public final class Constants {
     public static double kHomePosition = 0.0; // 1.143 > //test values
     public static final double kScoringPosition = 0.0;
     public static double kIntakePosition = -.989; //0.1 ish?
-    public static double kIntakePositionAuton = -9.90;
+    public static double kIntakePositionAuton = -9.89;
     public static final double kUnderChainPosition = -.7;
 
 

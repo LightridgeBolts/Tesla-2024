@@ -142,15 +142,15 @@ public class IntakeSubsystem extends SubsystemBase {
           @Override
           public void execute() {
             _launcher.runLauncher();
-            
+            setPower(.5);
           //  setPower(1.0);
           }
 
           @Override
           public boolean isFinished() {
-            if (m_timer.get() > .14 && launcher_running == false){
+            if (m_timer.get() > .16 && launcher_running == false){
               launcher_running = true;
-              setPower(1.0);
+          //    setPower(.5);
             } 
             return m_timer.get() > Constants.Intake.kShootFeedTime;
   
@@ -158,6 +158,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public void end(boolean interrupted) {
+            _launcher.stopLauncher();
             setPower(0.0);
           }
         };
@@ -205,10 +206,14 @@ public class IntakeSubsystem extends SubsystemBase {
         new Command() {
           private Timer m_timer;
           private boolean currentLimitMet = false;
+          private boolean runningBack = false;
+          private Timer m_startTimer;
           
 
           @Override
           public void initialize() {
+            m_startTimer = new Timer();
+            m_startTimer.start();
           //  m_timer = new Timer();
            // m_timer.start();
           }
@@ -221,29 +226,39 @@ public class IntakeSubsystem extends SubsystemBase {
 
           @Override
           public boolean isFinished() {
-            if(_intake.getOutputCurrent() > Constants.Intake.kCurrentThresholdIntake && currentLimitMet == false){
+            if(_intake.getOutputCurrent() > Constants.Intake.kCurrentThresholdIntake && currentLimitMet == false && m_startTimer.get() > 0.3 ){
+              SmartDashboard.putString("YEET", "WORKSDDD");
               currentLimitMet = true;
+             // return true;
               m_timer = new Timer();
+              m_timer.start();
             }
             if(!currentLimitMet){
               return false;
             }
             if(m_timer.get() < Constants.Intake.kIntakeAutonRunTime){
+              SmartDashboard.putString("HEHEHE", "RUNBACKEARDS");
+
+              if(runningBack == false){
+                runningBack = true;
+              //  _intake.setPower(-.5);
+              }
+         //     _intake.setPower(-.5);
               return false;
             }
-            _intake.setPower(0.0);
-            _intake.retract();
+
+          //  _intake.setPower(-.1);
             return true;
           }
 
           @Override
           public void end(boolean interrupted) {
-           // setPower(0.0);
+             _intake.setPower(0.0);
+          //   _intake.retract();
           }
         };
 
     newCommand.addRequirements(_intake);
-
     return newCommand;
   }
 }
