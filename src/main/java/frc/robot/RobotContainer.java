@@ -28,10 +28,10 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.ArmSubsystem;
+// import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LauncherSubsystem;
+// import frc.robot.subsystems.IntakeSubsystem;
+// import frc.robot.subsystems.LauncherSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -50,12 +50,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  /*
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final LauncherSubsystem m_launcher = new LauncherSubsystem();
-//  private final SlewRateLimiter slew_left_y = new SlewRateLimiter(0.5);
- // private final SlewRateLimiter slew_left_x = new SlewRateLimiter(.5);
-  //private final SlewRateLimiter slew_right_x = new SlewRateLimiter(.5);
+  */
+  // private final SlewRateLimiter slew_left_y = new SlewRateLimiter(0.5);
+  // private final SlewRateLimiter slew_left_x = new SlewRateLimiter(.5);
+  // private final SlewRateLimiter slew_right_x = new SlewRateLimiter(.5);
 
   private boolean directionNegate = true;
 
@@ -69,7 +71,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    initPathPlanner();
+    //initPathPlanner();
     // Configure the button bindings
     configureButtonBindings();
     
@@ -92,13 +94,13 @@ public class RobotContainer {
                 -MathUtil.applyDeadband((directionNegate) ? -(m_driverController.getRightX()) : (m_driverController.getRightX()), OIConstants.kDriveDeadband)
              */
 
-            m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
+            //m_arm.setDefaultCommand(new RunCommand(() -> m_arm.runAutomatic(), m_arm));
 
             // set the intake to stop (0 power) when no other command is running
-            m_intake.setDefaultCommand(new RunCommand(() -> m_intake.setPower(0.0), m_intake));
+            //m_intake.setDefaultCommand(new RunCommand(() -> m_intake.setPower(0.0), m_intake));
         
             // configure the launcher to stop when no other command is running
-            m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
+            //m_launcher.setDefaultCommand(new RunCommand(() -> m_launcher.stopLauncher(), m_launcher));
    
     initAutons();
   }
@@ -113,6 +115,8 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
 
+   /*
+
    private void initPathPlanner() {
     NamedCommands.registerCommand("intakeRun", IntakeSubsystem.runIntake(m_intake));
     NamedCommands.registerCommand("armScoringPosition", new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
@@ -120,6 +124,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeShoot", m_intake.feedLauncherTwo(m_launcher));
     NamedCommands.registerCommand("retractIntake", m_intake.retract());
    }
+   */
 
    private void initAutons() {
     m_autoChooser = AutoBuilder.buildAutoChooser();
@@ -134,11 +139,11 @@ public class RobotContainer {
     new JoystickButton(m_driverController, PS4Controller.Button.kSquare.value).whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
     
     // set up arm preset positions
-    new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
-        .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
-    new Trigger(() ->m_driverController.getL2Axis()> Constants.OIConstants.kTriggerButtonThreshold).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
+    //new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value)
+    //    .onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kScoringPosition)));
+    //new Trigger(() ->m_driverController.getL2Axis()> Constants.OIConstants.kTriggerButtonThreshold).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kIntakePosition)));
     
-    new POVButton(m_driverController, 0).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kUnderChainPosition)));
+    //new POVButton(m_driverController, 0).onTrue(new InstantCommand(() -> m_arm.setTargetPosition(Constants.Arm.kUnderChainPosition)));
 
   //  new JoystickButton(m_driverController,  PS4Controller.Button.kCircle.value)
    //     .onTrue(new InstantCommand(() -> directionNegate = !directionNegate));
@@ -146,13 +151,15 @@ public class RobotContainer {
 
     // intake controls (run while button is held down, run retract command once when the button is
     // released)
+    
+    /*
     new Trigger(
             () ->
                 m_driverController.getR2Axis()
                     > Constants.OIConstants.kTriggerButtonThreshold)
         .whileTrue(new RunCommand(() -> m_intake.setPower(Constants.Intake.kIntakePower), m_intake))
         .onFalse(m_intake.retract());
-
+    
 
     new JoystickButton(m_driverController, PS4Controller.Button.kTriangle.value)
         .whileTrue(new RunCommand(() -> m_launcher.ampMode()))
@@ -162,16 +169,16 @@ public class RobotContainer {
     // launcher controls (button to pre-spin the launcher and button to launch)
     new JoystickButton(m_driverController, PS4Controller.Button.kR1.value)
         .whileTrue(new RunCommand(() -> m_launcher.runLauncher(), m_launcher));
-
+    
     // This runs a shot
     new JoystickButton(m_driverController,  PS4Controller.Button.kCross.value)
         .onTrue(m_intake.feedLauncherTwo(m_launcher));
-
+    */
 
     // Buttons for manually adjusting the height of the robot
-    new POVButton(m_driverController, 180).onTrue(moveBack(.3));
-    new POVButton(m_driverController, 270).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition + .002));
-    new POVButton(m_driverController, 90).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition - .002));
+    //new POVButton(m_driverController, 180).onTrue(moveBack(.3));
+    //new POVButton(m_driverController, 270).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition + .002));
+    //new POVButton(m_driverController, 90).onTrue(new RunCommand(() -> Constants.Arm.kIntakePosition = Constants.Arm.kIntakePosition - .002));
     
     // new POVButton(m_driverController, 180).toggleOnTrue(getMoveBackCommand());    
 }
@@ -227,9 +234,9 @@ public class RobotContainer {
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
 
-  public Command getAutonShootMoveBack() {
-    return new SequentialCommandGroup(moveBack(1.5));
-  }
+  //public Command getAutonShootMoveBack() {
+  //  return new SequentialCommandGroup(moveBack(1.5));
+  //}
 
   /*
   public Command getAutonShootMoveBack() {
@@ -237,7 +244,7 @@ public class RobotContainer {
     return new SequentialCommandGroup(moveBack(.1), runLaunch, moveBack(.2));
   }
   */
-
+  /*/
   public Command moveBack(double time) {
     Command newCommand =
         new Command() {
@@ -271,4 +278,5 @@ public class RobotContainer {
     newCommand.addRequirements(m_robotDrive);
     return newCommand;
   }
+  */
 }
